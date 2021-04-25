@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>LED toggler</title>
+</head>
+
+<body>
+	<h2 id="text">LED is off!</h2>
+	<form id="form">
+		<button id="button">Toggle</button>
+	</form>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	let socket = io();
+	let form = document.getElementById("form");
+	let text = document.getElementById("text");
+	let val = 0;
+
+	form.addEventListener("submit", (e) => {
+		e.preventDefault();
+
+		if (text.innerText.includes("on")) {
+			text.innerText = "LED is off!";
+			val = 0;
+		} else if (text.innerText.includes("off")) {
+			text.innerText = "LED is on!"
+			val = 1;
+		}
+
+		socket.emit("toggle", val);
+	});
+</script>
+
+</html>
