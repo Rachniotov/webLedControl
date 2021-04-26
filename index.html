@@ -11,6 +11,10 @@
 	<h2 id="text">LED is off!</h2>
 	<form id="form">
 		<button id="button">Toggle</button>
+		<div style="margin-top:20px">
+			<h3>Slide to change brightness</h3>
+			<input id="slider" type="range" max="250" min="0">
+		</div>
 	</form>
 </body>
 <script src="/socket.io/socket.io.js"></script>
@@ -19,6 +23,7 @@
 	let form = document.getElementById("form");
 	let text = document.getElementById("text");
 	let val = 0;
+	let slider = document.getElementById("slider");
 
 	form.addEventListener("submit", (e) => {
 		e.preventDefault();
@@ -32,6 +37,14 @@
 		}
 
 		socket.emit("toggle", val);
+	});
+
+	slider.addEventListener("input", (e) => {
+		if (val === 0) {
+			socket.emit("slider", 0);
+		} else {
+			socket.emit("slider", e.target.value);
+		}
 	});
 </script>
 

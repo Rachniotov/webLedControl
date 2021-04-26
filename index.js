@@ -28,6 +28,10 @@ io.on('connection', (socket) => {
 			led.digitalWrite(val);
 		}
 
+	});
+
+	socket.on('slider', (val) => {
+		led.pwmWrite(val);
 	})
 });
 
